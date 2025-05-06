@@ -18,15 +18,15 @@ public class AccountDAO {
             try (PreparedStatement debitStmt = con.prepareStatement(debitSQL);
                     PreparedStatement creditStmt = con.prepareStatement(creditSQL)) {
 
-                //for debit
+                //for debiting money
                 debitStmt.setDouble(1,amount);
-                debitStmt.setInt(2,1);
+                debitStmt.setInt(2,fromAccountId);
                 debitStmt.executeUpdate();
 
-                //for debit
+                //for crediting money
 
                 creditStmt.setDouble(1,amount);
-                creditStmt.setInt(2,2);
+                creditStmt.setInt(2,toAccountId);
                 creditStmt.executeUpdate();
 
 

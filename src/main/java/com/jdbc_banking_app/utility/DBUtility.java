@@ -19,7 +19,7 @@ public class DBUtility {
             config.setUsername(props.getProperty("db.username"));
             config.setPassword(props.getProperty("db.password"));
             config.setConnectionTimeout(Long.parseLong(props.getProperty("db.timeout", "5000")) * 1000);
-            config.setMaximumPoolSize(Integer.parseInt(props.getProperty("db.poolSize", "5")));
+            config.setMaximumPoolSize(Integer.parseInt(props.getProperty("db.poolSize", "10")));
 
             hikariDataSource = new HikariDataSource(config);
         } catch (Exception e) {
