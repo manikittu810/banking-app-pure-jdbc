@@ -12,9 +12,9 @@ public class Main {
         int fromId = sc.nextInt();
         System.out.println("Enter to  Account_ID (Credit action) : " );
         int toId = sc.nextInt();
-        System.out.println("Enter Amount to transfer from " + fromId +" to " + toId);
+        System.out.println("Enter Amount to transfer from " + fromId + " to " + toId);
         double amount = sc.nextDouble();
-        System.out.println("Initiating transfer of amount : "+ amount +" from account_ID : " + fromId + "to account_ID "+ toId);
+        System.out.println("Initiating transfer of amount : "+ amount +" from account_ID : " + fromId + " to account_ID "+ toId);
         bankingService.performTransfer(fromId,toId,amount);
     }
 }
