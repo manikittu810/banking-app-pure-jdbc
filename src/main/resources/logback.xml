@@ -1,0 +1,21 @@
+<configuration>
+    <!-- Define log level for the whole app -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+    </root>
+
+    <!-- Show DEBUG only for your package -->
+    <logger name="com.jdbc_banking_app" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
+    <!-- Enable HikariCP debug logs if needed -->
+    <logger name="com.zaxxer.hikari" level="INFO" />
+
+    <!-- Appender definition -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+</configuration>
