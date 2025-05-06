@@ -1,4 +1,4 @@
-package com.jdbc_banking_app.account_details;
+package com.jdbc_banking_app.entity;
 
 public class Account {
     private int id;
