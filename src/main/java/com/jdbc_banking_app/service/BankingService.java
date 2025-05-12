@@ -1,9 +1,7 @@
-package com.jdbc_banking_app.service_layer_2;
+package com.jdbc_banking_app.service;
 
 import com.jdbc_banking_app.exception.BankingException;
-import com.jdbc_banking_app.service_layer_1.AccountDAO;
-
-import java.sql.SQLException;
+import com.jdbc_banking_app.DAO.AccountDAO;
 
 public class BankingService {
     private final AccountDAO accountDAO = new AccountDAO();

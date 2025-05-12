@@ -1,6 +1,8 @@
-package com.jdbc_banking_app.service_layer_1;
+package com.jdbc_banking_app.DAO;
 
 import com.jdbc_banking_app.utility.DBUtility;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -11,17 +13,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class AccountDAO {
+    private static  final Logger logger = LoggerFactory.getLogger(AccountDAO.class);
 
     public void transferAmount(int fromAccountId, int toAccountId, double amount) {
         String debitSQL = "update accounts SET balance = balance - ? where id = ?";
         String creditSQL = "update accounts SET balance = balance + ? where id = ?";
 
         try (Connection con = DBUtility.getConnection()) {
+            logger.info("initiating transfer : fromAccountId={}, toAccountId={}, amount={}",fromAccountId,toAccountId,amount);
             printAccountBalances(con, "Before Transaction : ");
             con.setAutoCommit(false);
 
             if(!hasSufficientBalance(con,fromAccountId,amount,10)){
-                System.out.println("Insufficient balance. Minimum required balance after transfer: $10.00");
+                logger.warn("Insufficient balance in the account  : {}",fromAccountId);
+//                System.out.println("Insufficient balance. Minimum required balance after transfer: $10.00");
                 return ;
             }
 
@@ -32,12 +37,14 @@ public class AccountDAO {
                 debitStmt.setDouble(1, amount);
                 debitStmt.setInt(2, fromAccountId);
                 debitStmt.executeUpdate();
+                logger.debug("debited {} from account : {}",amount,fromAccountId);
 
                 //for crediting money
 
                 creditStmt.setDouble(1, amount);
                 creditStmt.setInt(2, toAccountId);
                 creditStmt.executeUpdate();
+                logger.debug("credited {} into account : {}", amount,toAccountId);
 
 
                 con.commit();
@@ -47,12 +54,14 @@ public class AccountDAO {
 
             } catch (SQLException e) {
                 con.rollback();
-                System.out.println("Transfer failed. Rolled back");
+//                System.out.println("Transfer failed. Rolled back");
+                logger.error("Transfer failed. Transaction rolled back.", e);
                 e.printStackTrace();
             }
 
         } catch (Exception e) {
-            throw new RuntimeException("Database error", e);
+//            throw new RuntimeException("Database error", e);
+            logger.error("Database error",e);
         }
     }
 
@@ -71,8 +80,9 @@ public class AccountDAO {
 
             System.out.println(header + columns + "\n" + separator);
             pw.println(header + columns + "\n" + separator);
-
+            logger.info("--------------{}-----------",label);
             while(rs.next()) {
+                logger.info("ID :{},Name : {},Balance :{}",rs.getInt(1),rs.getString(2),rs.getDouble(3));
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
                 double balance = rs.getDouble("balance");

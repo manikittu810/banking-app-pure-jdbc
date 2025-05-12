@@ -1,6 +1,6 @@
 package com.jdbc_banking_app;
 
-import com.jdbc_banking_app.service_layer_2.BankingService;
+import com.jdbc_banking_app.service.BankingService;
 
 import java.util.Scanner;
 
